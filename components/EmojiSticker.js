@@ -10,7 +10,7 @@ import Animated, {
 const AnimatedImage = Animated.createAnimatedComponent(Image);
 const AnimatedView = Animated.createAnimatedComponent(View);
 
-export default function EmojiSticker({ imageSize, stickerSource }) {
+export default function EmojiSticker({ imageSize, stickerSource }) {    
     const translateX = useSharedValue(0);
     const translateY = useSharedValue(0);
 
@@ -25,18 +25,18 @@ export default function EmojiSticker({ imageSize, stickerSource }) {
         },
     });
     
-const containerStyle = useAnimatedStyle(() => {
-    return {
-        transform: [
-            {
-                translateX: translateX.value,
-            },
-            {
-                translateY: translateY.value,
-            },
-        ],
-    };
-});
+    const containerStyle = useAnimatedStyle(() => {
+        return {
+            transform: [
+                {
+                    translateX: translateX.value,
+                },
+                {
+                    translateY: translateY.value,
+                },
+            ],
+        };
+    });
 
     const scaleImage = useSharedValue(imageSize);
 
@@ -57,12 +57,12 @@ const containerStyle = useAnimatedStyle(() => {
 
     return (
         <PanGestureHandler onGestureEvent={onDrag}>
-            <AnimatedView style={{ top: -350 }}>
+            <AnimatedView style={[containerStyle, { top: -350 }]}>
                 <TapGestureHandler onGestureEvent={onDoubleTap} numberOfTaps={2}>
                     <AnimatedImage 
                         source={stickerSource}
                         resizeMode="contain"
-                        style={{ width: imageSize, height: imageSize }}
+                        style={[imageStyle, { width: imageSize, height: imageSize }]}
                     />
                 </TapGestureHandler>
             </AnimatedView>
